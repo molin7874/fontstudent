@@ -35,12 +35,13 @@ Vue.prototype.$axios.interceptors.response.use(
     const rescode = response.data.code
     if (rescode === '0') {
       return response
-    } else if (rescode === '-3') {
+    } else if (rescode === '-4') {
       console.log('请重新登录')
       removeToken()
       router.push({path: '/login'})
     } else {
-      console.log(response.data.message)
+      router.push({path: '/login'})
+      console.log(response.data.msg)
       return response
     }
   },

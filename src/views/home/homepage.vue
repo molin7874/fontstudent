@@ -1,41 +1,48 @@
 <template>
+<div class="content">
+  <h1>{{this.$store.state.user.userlevel === 1 ? '管理员': '普通用户'}},欢迎进入管理系统</h1>
   <div class="container">
-    <h1>{{this.$store.state.user.userlevel === 1 ? '管理员': '普通用户'}},欢迎进入管理系统</h1>
     <div id="echartContainer" style="width:500px; height:500px"></div>
     <div id="pic1"></div>
+  </div>
   </div>
 </template>
 <script>
 var echarts = require('echarts')
 export default {
   data () {
-    return {}
+    return {
+      gradedata: []
+    }
   },
   methods: {
     datafromrouter () {
-      this.$axios.post('/api/adduser1').then(res => {
-        console.log(res)
-      })
+      this.$axios.post('/api/adduser1').then(res => {})
     },
     chartlist () {
-      // 基于准备好的dom，初始化echarts实例
-      var myChart = echarts.init(document.getElementById('echartContainer'))
-      // 绘制图表
-      myChart.setOption({
-        title: { text: 'ECharts 入门示例' },
-        tooltip: {},
-        xAxis: {
-          data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-        },
-        yAxis: {},
-        series: [
-          {
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-          }
-        ]
+      const paramUrl = '?grade=' + 'grade'
+      this.$axios.get('/api/users/countgrade' + paramUrl, {}).then(res => {
+        this.gradedata = res.data
+        console.log(this.gradedata)
+        var myChart = echarts.init(document.getElementById('echartContainer'))
+        // 绘制图表
+        myChart.setOption({
+          title: { text: '学生会年级统计' },
+          tooltip: {},
+          xAxis: {
+            data: ['大一', '大二', '大三', '大四']
+          },
+          yAxis: {},
+          series: [
+            {
+              name: '人数',
+              type: 'bar',
+              data: this.gradedata
+            }
+          ]
+        })
       })
+      // 基于准备好的dom，初始化echarts实例
     },
     chartpie () {
       var myCharts1 = echarts.init(document.getElementById('pic1'))
@@ -88,6 +95,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.container {
+  display: flex;
+}
 #pic1 {
   width: 400px;
   height: 400px;
