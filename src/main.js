@@ -36,11 +36,10 @@ Vue.prototype.$axios.interceptors.response.use(
     if (rescode === '0') {
       return response
     } else if (rescode === '-4') {
-      console.log('请重新登录')
+      Vue.prototype.$message('格式不正确')
       removeToken()
       router.push({path: '/login'})
     } else {
-      router.push({path: '/login'})
       console.log(response.data.msg)
       return response
     }

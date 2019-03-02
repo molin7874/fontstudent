@@ -2,8 +2,8 @@
 <div class="content">
   <h1>{{this.$store.state.user.userlevel === 1 ? '管理员': '普通用户'}},欢迎进入管理系统</h1>
   <div class="container">
-    <div id="echartContainer" style="width:500px; height:500px"></div>
-    <div id="pic1"></div>
+    <div id="echartContainer" style="width:33.3%; height:300px" ref="echarts1"></div>
+    <div id="pic1" ref="echarts2"></div>
   </div>
   </div>
 </template>
@@ -45,46 +45,55 @@ export default {
       // 基于准备好的dom，初始化echarts实例
     },
     chartpie () {
-      var myCharts1 = echarts.init(document.getElementById('pic1'))
-      var option1 = {
-        title: {
-          text: '某站点用户访问来源',
-          subtext: '纯属虚构',
-          x: 'center'
-        },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)'
-        },
-        legend: {
-          orient: 'vertical',
-          left: 'left',
-          data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
-        },
-        series: [
-          {
-            name: '访问来源',
-            type: 'pie',
-            radius: '55%',
-            center: ['50%', '60%'],
-            data: [
-              { value: 335, name: '直接访问' },
-              { value: 310, name: '邮件营销' },
-              { value: 234, name: '联盟广告' },
-              { value: 135, name: '视频广告' },
-              { value: 1548, name: '搜索引擎' }
-            ],
-            itemStyle: {
-              emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
+      this.$axios.get('/api/users/countmajor', {}).then(res => {
+        var myCharts1 = echarts.init(document.getElementById('pic1'))
+        var option1 = {
+          title: {
+            text: '本站专业组成',
+            subtext: '纯属虚构',
+            x: 'center'
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['计算机', '会计', '软件']
+          },
+          series: [
+            {
+              name: '访问来源',
+              type: 'pie',
+              radius: '55%',
+              center: ['50%', '60%'],
+              data: [
+                { value: res.data[0], name: '计算机' },
+                { value: res.data[1], name: '会计' },
+                { value: res.data[2], name: '软件' }
+              ],
+              itemStyle: {
+                emphasis: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
               }
             }
-          }
-        ]
-      }
-      myCharts1.setOption(option1)
+          ]
+        }
+        myCharts1.setOption(option1)
+      })
+    },
+    resize () {
+      let _this = this
+      setTimeout(() => {
+        window.addEventListener('resize', function () {
+          _this.$refs.echarts1.resize()
+          _this.$refs.echarts2.resize()
+        })
+      }, 10)
     }
   },
   mounted () {
@@ -99,8 +108,8 @@ export default {
   display: flex;
 }
 #pic1 {
-  width: 400px;
-  height: 400px;
+  width: 33.3%;
+  height: 300px;
   margin: 20px auto;
 }
 </style>

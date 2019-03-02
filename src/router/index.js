@@ -71,6 +71,36 @@ export const constantRouterMap = [
       }
     ]
   },
+  {
+    path: '',
+    component: Layout,
+    // redirect: '/example/homepage',
+    name: 'organizedivision',
+    meta: { title: '组织部', icon: 'example' },
+    children: [
+      {
+        path: 'organize',
+        name: 'organize',
+        component: () => import('@/views/organizedivision/index'),
+        meta: { title: '组织部主页', icon: 'example' }
+      }
+    ]
+  },
+  {
+    path: '',
+    component: Layout,
+    // redirect: '/example/homepage',
+    name: 'sportsdivision',
+    meta: { title: '体育部', icon: 'example' },
+    children: [
+      {
+        path: 'sports',
+        name: 'sports',
+        component: () => import('@/views/sportsdivision/index'),
+        meta: { title: '体育部主页', icon: 'example' }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 

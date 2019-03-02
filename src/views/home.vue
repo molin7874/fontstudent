@@ -1,5 +1,21 @@
 <template>
  <div class="reg-contanier">
+   <el-upload
+      :class="{ 'upload-demo': blocktrue, 'upload': nonefalse}"
+      action="/api/upload"
+      :auto-upload="false"
+      :limit="1"
+      ref="upload"
+      :http-request="upload"
+      multiple
+      list-type="picture"
+      :on-success="handleAvatarSuccess"
+      accept="image/png, image/jpeg">
+      <!-- :http-request="upload" -->
+      <el-button size="small" type="primary">点击上传</el-button>
+      <div slot="tip" class="el-upload__tip">只能上传jpg,png图片</div>
+    </el-upload>
+    <el-button type="primary" @click="upload" class="confirm-btn">确定</el-button>
     <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign" class="reg-form">
   <el-form-item>
     <el-input v-model="formLabelAlign.username" name="username" placeholder="username"></el-input>
@@ -25,6 +41,8 @@ export default {
   data () {
     return {
       labelPosition: 'left',
+      nonefalse: false,
+      blocktrue: true,
       formLabelAlign: {
         username: '',
         grade: '',
@@ -61,6 +79,27 @@ export default {
           this.$router.push({path: '/login'})
         }
       })
+    },
+    handleAvatarSuccess (response) {
+      console.log(response)
+      this.$message.success('上传头像成功!')
+    },
+    upload () {
+      const formData = new FormData()
+      const file = this.$refs.upload.uploadFiles[0]
+      const headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } }
+      if (!file) { // 若未选择文件
+        alert('请选择文件')
+        return
+      }
+      formData.append('file', file.raw)
+      // formData.append('name', this.name)
+      // formData.append('age', this.age)
+      this.$axios.post('/api/upload', formData, headerConfig).then(res => {
+        console.log(res)
+        this.nonefalse = true
+        localStorage.setItem('userimg', res.data.name)
+      })
     }
   }
 }
@@ -78,5 +117,17 @@ export default {
   .el-button{
     width: 100%
   }
+  .confirm-btn{
+    width: auto;
+  }
 }
+.upload-demo{
+  width: 520px;
+}
+.upload{
+  display: none;
+}
+.el-upload-list--picture{
+    width: 300px;
+  }
 </style>
