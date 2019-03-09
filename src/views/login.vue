@@ -55,25 +55,31 @@ export default {
     }
   },
   mounted () {
-    this.getdata()
+    // this.getdata()
   },
   methods: {
-    getdata () {
-      // console.log('1')
-      this.$axios.get('/api/api/selectAll').then(res => {
-        console.log(res)
-      })
-    },
+    // getdata () {
+    //   // console.log('1')
+    //   this.$axios.get('/api/api/selectAll').then(res => {
+    //     console.log(res)
+    //   })
+    // },
     getdata1 () {
       let paramUrl = this.$qs.stringify({
         username: this.formLabelAlign.username,
         password: this.formLabelAlign.password
       })
       this.$axios.post('/api/', paramUrl).then((res) => {
-        // console.log(res)
-        setToken(res.data.token)
-        this.$router.push({path: '/dashboard', query: {id: res.data.isadmin}})
-        this.initstore(res.data.isadmin)
+        if (res.data.code === '0') {
+          this.$router.push({path: '/dashboard', query: {id: res.data.isadmin}})
+          this.initstore(res.data.isadmin)
+          setToken(res.data.token)
+          localStorage.setItem('userimg', res.data.img)
+        } else {
+          this.$message('失败' + res.data.msg)
+          this.formLabelAlign.username = ''
+          this.formLabelAlign.password = ''
+        }
       })
     },
     initstore (userlevel) {

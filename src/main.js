@@ -36,7 +36,7 @@ Vue.prototype.$axios.interceptors.response.use(
     if (rescode === '0') {
       return response
     } else if (rescode === '-4') {
-      Vue.prototype.$message('格式不正确')
+      Vue.prototype.$message('token失效 重新登陆')
       removeToken()
       router.push({path: '/login'})
     } else {
