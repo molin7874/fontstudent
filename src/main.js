@@ -11,10 +11,13 @@ import '@/icons' // icon
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/index.scss' // global css
 import { getToken, removeToken } from '@/utils/auth'
+import './assets/icon/iconfont.css'
+import './assets/icon/iconfont.js'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.prototype.$axios = axios
 Vue.prototype.$qs = qs
+Vue.prototype.root = process.env.API_ROOT
 /* eslint-disable no-new */
 // Vue.prototype.$axios.defaults.headers['authorization'] = 'STDTOKEN'
 Vue.prototype.$axios.interceptors.request.use(

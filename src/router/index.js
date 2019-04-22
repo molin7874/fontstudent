@@ -83,6 +83,13 @@ export const constantRouterMap = [
         name: 'organize',
         component: () => import('@/views/organizedivision/index'),
         meta: { title: '组织部主页', icon: 'example' }
+      },
+      {
+        path: 'organizedetail',
+        name: 'organizedetail',
+        hidden: true,
+        component: () => import('@/views/organizedivision/organizeDetail'),
+        meta: { title: '组织部成员详情', icon: 'example' }
       }
     ]
   },
@@ -98,6 +105,28 @@ export const constantRouterMap = [
         name: 'sports',
         component: () => import('@/views/sportsdivision/index'),
         meta: { title: '体育部主页', icon: 'example' }
+      }
+    ]
+  },
+  {
+    path: '',
+    component: Layout,
+    // redirect: '/example/homepage',
+    name: 'activitylist',
+    meta: { title: '活动列表', icon: 'example' },
+    children: [
+      {
+        path: 'activity',
+        name: 'activity',
+        component: () => import('@/views/activity/activitylist'),
+        meta: { title: '活动列表', icon: 'example' }
+      },
+      {
+        path: 'activitydetail',
+        name: 'activitydetail',
+        hidden: true,
+        component: () => import('@/views/activity/activityDetail'),
+        meta: { title: '活动详情', icon: 'example' }
       }
     ]
   },

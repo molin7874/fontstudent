@@ -37,6 +37,9 @@
           去注册
         </el-button>
       </div>
+       <div class="tips">
+         <span>2019-3-1 20157575 王一帆</span>
+      </div>
     </el-form>
   </div>
 </template>
@@ -69,12 +72,13 @@ export default {
         username: this.formLabelAlign.username,
         password: this.formLabelAlign.password
       })
-      this.$axios.post('/api/', paramUrl).then((res) => {
+      this.$axios.post(this.root + '/', paramUrl).then((res) => {
         if (res.data.code === '0') {
-          this.$router.push({path: '/dashboard', query: {id: res.data.isadmin}})
+          this.$message('成功' + res.data.msg)
           this.initstore(res.data.isadmin)
           setToken(res.data.token)
           localStorage.setItem('userimg', res.data.img)
+          this.$router.push({path: '/dashboard', query: {id: res.data.isadmin}})
         } else {
           this.$message('失败' + res.data.msg)
           this.formLabelAlign.username = ''

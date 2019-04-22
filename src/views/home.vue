@@ -60,7 +60,7 @@ export default {
         password: this.formLabelAlign.password,
         major: this.formLabelAlign.major
       })
-      this.$axios.post('/api/adduser', paramUrl).then((res) => {
+      this.$axios.post(this.root + '/adduser', paramUrl).then((res) => {
         console.log(res.data.token)
         setToken(res.data.token)
         this.istoken(res.data.token)
@@ -70,7 +70,7 @@ export default {
       let paramUrl1 = this.$qs.stringify({
         token: logintoken
       })
-      this.$axios.post('/api/api/admin/checkuser', paramUrl1).then((res) => {
+      this.$axios.post(this.root + '/api/admin/checkuser', paramUrl1).then((res) => {
         console.log(res)
         if (res.data.status === 1) {
           this.$router.push({path: '/dashboard'})
@@ -95,7 +95,7 @@ export default {
       formData.append('file', file.raw)
       // formData.append('name', this.name)
       // formData.append('age', this.age)
-      this.$axios.post('/api/upload', formData, headerConfig).then(res => {
+      this.$axios.post(this.root + '/upload', formData, headerConfig).then(res => {
         console.log(res)
         this.nonefalse = true
         localStorage.setItem('userimg', res.data.name)

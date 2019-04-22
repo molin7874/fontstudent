@@ -21,7 +21,7 @@ export default {
     },
     chartlist () {
       const paramUrl = '?grade=' + 'grade'
-      this.$axios.get('/api/users/countgrade' + paramUrl, {}).then(res => {
+      this.$axios.get(this.root + '/users/countgrade' + paramUrl, {}).then(res => {
         this.gradedata = res.data
         console.log(this.gradedata)
         var myChart = echarts.init(document.getElementById('echartContainer'))
@@ -45,7 +45,7 @@ export default {
       // 基于准备好的dom，初始化echarts实例
     },
     chartpie () {
-      this.$axios.get('/api/users/countmajor', {}).then(res => {
+      this.$axios.get(this.root + '/users/countmajor', {}).then(res => {
         var myCharts1 = echarts.init(document.getElementById('pic1'))
         var option1 = {
           title: {

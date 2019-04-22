@@ -2,6 +2,7 @@
   <div class="study-container">
     <h2>学生会学习部</h2>
     <el-table
+    stripe
     :data="tableData"
     style="width: 100%">
     <el-table-column
@@ -37,8 +38,11 @@
         <span style="margin-left: 10px">{{ scope.row.major }}</span>
       </template>
     </el-table-column>
-    <el-table-column label="操作" width="250">
+    <el-table-column label="操作" width="300">
       <template slot-scope="scope">
+        <el-button
+          size="mini"
+          @click="todetail(scope.row.id)">详情</el-button>
         <el-button
           size="mini"
           @click="handleEdit(scope.$index, scope.row.id)">编辑</el-button>
@@ -69,7 +73,7 @@
   </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+    <el-button type="primary" @click="confirmdata">确 定</el-button>
   </div>
 </el-dialog>
   </div>
@@ -89,7 +93,7 @@ export default {
     handleEdit (index, id) {
       console.log(index, id)
       const paramUrl = '?id=' + id + '&isadmin=' + this.$store.state.user.userlevel
-      this.$axios.get('/api/users/viewbyid' + paramUrl, {}).then((res) => {
+      this.$axios.get(this.root + '/users/viewbyid' + paramUrl, {}).then((res) => {
         console.log(res)
         if (res.data === undefined) {
           this.$message(res.msg)
@@ -105,12 +109,24 @@ export default {
         id: id,
         isadmin: this.$store.state.user.userlevel
       })
-      this.$axios.post('/api/users/delstudy', paramUrl).then((res) => {
+      this.$axios.post(this.root + '/users/delstudy', paramUrl).then((res) => {
         if (res.code === '0') {
-          this.$message(res.msg)
+          this.$message(res.data.msg)
         } else {
-          this.$message(res.msg)
+          this.$message(res.data.msg)
         }
+      })
+    },
+    confirmdata () {
+      let paramUrl = this.$qs.stringify({
+        isadmin: this.$store.state.user.userlevel,
+        id: this.form.id,
+        division: this.form.division,
+        uername: this.form.username
+      })
+      this.$axios.post(this.root + '/users/editstudy', paramUrl).then((res) => {
+        this.dialogFormVisible = false
+        this.$message(res.data.msg)
       })
     },
     export2Excel () {
@@ -128,9 +144,12 @@ export default {
       return jsonData.map(v => filterVal.map(j => v[j]))
     },
     getinitdata () {
-      this.$axios.get('/api/users/getstudydivision', {}).then((res) => {
+      this.$axios.get(this.root + '/users/getstudydivision', {}).then((res) => {
         this.tableData = res.data
       })
+    },
+    todetail (id) {
+      this.$router.push({path: '/organizedetail', query: {id: id}})
     }
   },
   created () {

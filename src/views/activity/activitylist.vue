@@ -1,6 +1,6 @@
 <template>
   <div class="study-container">
-    <h2>学生会组织部</h2>
+    <h2>学生会活动列表</h2>
     <el-table
     stripe
     :data="tableData"
@@ -10,32 +10,40 @@
       width="">
     </el-table-column>
     <el-table-column
-      label="年级"
+      label="活动名称"
       width="">
       <template slot-scope="scope">
         <i class="el-icon-time"></i>
-        <span style="margin-left: 10px">{{ scope.row.grade }}</span>
+        <span style="margin-left: 10px">{{ scope.row.name }}</span>
       </template>
     </el-table-column>
     <el-table-column
-      label="姓名"
+      label="活动名称"
       width="">
       <template slot-scope="scope">
         <el-popover trigger="hover" placement="top">
-          <p>姓名: {{ scope.row.username }}</p>
-          <p>学号: {{ scope.row.id }}</p>
+          <p>活动名称: {{ scope.row.typename }}</p>
+          <p>活动类型: {{ scope.row.type }}</p>
           <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.username }}</el-tag>
+            <el-tag size="medium">{{ scope.row.typename }}</el-tag>
           </div>
         </el-popover>
       </template>
     </el-table-column>
     <el-table-column
-      label="专业"
+      label="开始时间"
       width="">
       <template slot-scope="scope">
         <i class="el-icon-location-outline"></i>
-        <span style="margin-left: 10px">{{ scope.row.major }}</span>
+        <span style="margin-left: 10px">{{ scope.row.begintime }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="结束时间"
+      width="">
+      <template slot-scope="scope">
+        <i class="el-icon-location-outline"></i>
+        <span style="margin-left: 10px">{{ scope.row.endTime }}</span>
       </template>
     </el-table-column>
     <el-table-column align="center" label="操作" width="300">
@@ -50,25 +58,22 @@
           size="mini"
           type="danger"
           @click="handleDelete(scope.$index, scope.row.id)">删除</el-button>
-          <el-button
-          size="mini"
-          @click="export2Excel()">打印</el-button>
       </template>
     </el-table-column>
   </el-table>
-   <el-dialog title="修改会员信息" :visible.sync="dialogFormVisible">
+   <el-dialog title="修改活动信息" :visible.sync="dialogFormVisible">
   <el-form :model="form">
-    <el-form-item label="部门" :label-width="formLabelWidth">
-      <el-input v-model="form.division" autocomplete="off"></el-input>
+    <el-form-item label="名称" :label-width="formLabelWidth">
+      <el-input v-model="form.name" autocomplete="off"></el-input>
     </el-form-item>
-    <el-form-item label="姓名" :label-width="formLabelWidth">
-      <el-input v-model="form.username" autocomplete="off"></el-input>
+    <el-form-item label="开始时间" :label-width="formLabelWidth">
+      <el-input v-model="form.begintime" autocomplete="off"></el-input>
     </el-form-item>
-    <el-form-item label="年级" :label-width="formLabelWidth">
-      <el-input v-model="form.grade" autocomplete="off" readonly="readonly"></el-input>
+    <el-form-item label="结束时间" :label-width="formLabelWidth">
+      <el-input v-model="form.endTime" autocomplete="off" ></el-input>
     </el-form-item>
-    <el-form-item label="专业" :label-width="formLabelWidth">
-      <el-input v-model="form.major" autocomplete="off" readonly="readonly"></el-input>
+    <el-form-item label="活动描述" :label-width="formLabelWidth">
+      <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}"  v-model="form.remark" autocomplete="off" ></el-input>
     </el-form-item>
   </el-form>
   <div slot="footer" class="dialog-footer">
@@ -93,7 +98,7 @@ export default {
     handleEdit (index, id) {
       console.log(index, id)
       const paramUrl = '?id=' + id + '&isadmin=' + this.$store.state.user.userlevel
-      this.$axios.get(this.root + '/users/viewbyid' + paramUrl, {}).then((res) => {
+      this.$axios.get(this.root + '/users/viewactivitybyid' + paramUrl, {}).then((res) => {
         if (res.data === undefined) {
           this.$message(res.msg)
         } else {
@@ -102,53 +107,41 @@ export default {
         }
       })
     },
-    confirmdata () {
-      let paramUrl = this.$qs.stringify({
-        isadmin: this.$store.state.user.userlevel,
-        id: this.form.id,
-        division: this.form.division,
-        uername: this.form.username
-      })
-      this.$axios.post(this.root + '/users/editorganize', paramUrl).then((res) => {
-        this.dialogFormVisible = false
-        this.$message(res.data.msg)
-      })
-    },
     handleDelete (index, id) {
       console.log(index, id)
       let paramUrl = this.$qs.stringify({
         id: id,
         isadmin: this.$store.state.user.userlevel
       })
-      this.$axios.post(this.root + '/users/delstudy', paramUrl).then((res) => {
+      this.$axios.post(this.root + '/users/delactivity', paramUrl).then((res) => {
         if (res.code === '0') {
-          this.$message(res.msg)
+          this.$message(res.data.msg)
         } else {
-          this.$message(res.msg)
+          this.$message(res.data.msg)
         }
       })
     },
-    export2Excel () {
-      require.ensure([], () => {
-        // eslint-disable-next-line
-        const { export_json_to_excel } = require('../../vendor/Export2Excel')
-        const tHeader = ['id', '年级', '姓名', '专业']
-        const filterVal = ['id', 'grade', 'username', 'major'] // 对应字段
-        const list = this.tableData
-        const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, '组织部excel')
+    confirmdata () {
+      let paramUrl = this.$qs.stringify({
+        isadmin: this.$store.state.user.userlevel,
+        id: this.form.id,
+        name: this.form.name,
+        begintime: this.form.begintime,
+        endTime: this.form.endTime,
+        remark: this.form.remark
+      })
+      this.$axios.post(this.root + '/users/editactivity', paramUrl).then((res) => {
+        this.dialogFormVisible = false
+        this.$message(res.data.msg)
       })
     },
-    formatJson (filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]))
-    },
     getinitdata () {
-      this.$axios.get(this.root + '/users/getorganizesdivision', {}).then((res) => {
+      this.$axios.get(this.root + '/users/getactivityist', {}).then((res) => {
         this.tableData = res.data
       })
     },
     todetail (id) {
-      this.$router.push({path: '/organizedetail', query: {id: id}})
+      this.$router.push({path: '/activitydetail', query: {id: id}})
     }
   },
   created () {
