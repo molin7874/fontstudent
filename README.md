@@ -1,21 +1,17 @@
-# y
+# 学生会事务管理系统
 
-> A Vue.js project
+> 此系统用于本人的毕业设计
 
-## Build Setup
+## 这里只是前端代码
 
-``` bash
-# install dependencies
-npm install
+``` 介绍
+# 前端采用vue + axios 及其全家桶
 
-# serve with hot reload at localhost:8080
-npm run dev
 
-# build for production with minification
-npm run build
+# 此系统为前后端分离
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# 后端采用node.js 框架为express
+
+
+# 主要是为了自己毕业设计和自己的兴趣开发, 系统的改进会在以后有空的时间内多多修改， 新手上路，请大家多多关照
