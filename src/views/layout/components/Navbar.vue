@@ -52,7 +52,7 @@ export default {
     getuserimg () {
       let basename = localStorage.getItem('userimg')
       console.log(basename)
-      this.imgUrl = 'http://localhost:3000/images/' + basename
+      this.imgUrl = this.root + '/images/' + basename
     }
   },
   created () {

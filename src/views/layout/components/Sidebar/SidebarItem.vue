@@ -4,6 +4,9 @@
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
+          <!-- <svg v-if="onlyOneChild.meta" class="icon image" aria-hidden="true">
+            <use xlink:href="#icon-jianguanzhifa-dianzianjuan"></use>
+          </svg> -->
           <item v-if="onlyOneChild.meta" :icon="onlyOneChild.meta.icon||item.meta.icon" :title="onlyOneChild.meta.title" />
         </el-menu-item>
       </app-link>

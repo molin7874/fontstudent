@@ -40,19 +40,19 @@ export const constantRouterMap = [
     component: Layout,
     // redirect: '/example/homepage',
     name: 'homepage',
-    meta: { title: 'homepage', icon: 'example' },
+    meta: { title: '首页', icon: 'example' },
     children: [
       {
         path: 'home',
         name: 'home',
         component: () => import('@/views/home/homepage'),
-        meta: { title: 'home', icon: 'example' }
+        meta: { title: '主页', icon: 'example' }
       },
       {
         path: 'addstudent',
         name: 'addstudent',
         component: () => import('@/views/addstudent'),
-        meta: { title: 'addstudent', icon: 'addstudent' }
+        meta: { title: '添加活动', icon: 'addstudent' }
       }
     ]
   },
