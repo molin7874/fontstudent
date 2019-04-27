@@ -40,19 +40,19 @@ export const constantRouterMap = [
     component: Layout,
     // redirect: '/example/homepage',
     name: 'homepage',
-    meta: { title: '首页', icon: 'example' },
+    meta: { title: '首页', icon: '#icon-zhuye' },
     children: [
       {
         path: 'home',
         name: 'home',
         component: () => import('@/views/home/homepage'),
-        meta: { title: '主页', icon: 'example' }
+        meta: { title: '主页', icon: '#icon-jianguanzhifa-dianzianjuan' }
       },
       {
         path: 'addstudent',
         name: 'addstudent',
         component: () => import('@/views/addstudent'),
-        meta: { title: '添加活动', icon: 'addstudent' }
+        meta: { title: '添加活动', icon: '#icon-ziyouhuodong' }
       }
     ]
   },
@@ -61,13 +61,13 @@ export const constantRouterMap = [
     component: Layout,
     // redirect: '/example/homepage',
     name: 'studydivision',
-    meta: { title: '学习部', icon: 'example' },
+    meta: { title: '学习部', icon: '#icon-xuexishuben' },
     children: [
       {
         path: 'index',
         name: 'index',
         component: () => import('@/views/studydivision/index'),
-        meta: { title: '学习部主页', icon: 'example' }
+        meta: { title: '学习部主页', icon: '#icon-xuexishuben' }
       }
     ]
   },
@@ -76,20 +76,20 @@ export const constantRouterMap = [
     component: Layout,
     // redirect: '/example/homepage',
     name: 'organizedivision',
-    meta: { title: '组织部', icon: 'example' },
+    meta: { title: '组织部', icon: '#icon-zuzhi' },
     children: [
       {
         path: 'organize',
         name: 'organize',
         component: () => import('@/views/organizedivision/index'),
-        meta: { title: '组织部主页', icon: 'example' }
+        meta: { title: '组织部主页', icon: '#icon-zuzhi' }
       },
       {
         path: 'organizedetail',
         name: 'organizedetail',
         hidden: true,
         component: () => import('@/views/organizedivision/organizeDetail'),
-        meta: { title: '组织部成员详情', icon: 'example' }
+        meta: { title: '组织部成员详情', icon: '#icon-zuzhi' }
       }
     ]
   },
@@ -98,13 +98,13 @@ export const constantRouterMap = [
     component: Layout,
     // redirect: '/example/homepage',
     name: 'sportsdivision',
-    meta: { title: '体育部', icon: 'example' },
+    meta: { title: '体育部', icon: '#icon-tiyu-lanqiu' },
     children: [
       {
         path: 'sports',
         name: 'sports',
         component: () => import('@/views/sportsdivision/index'),
-        meta: { title: '体育部主页', icon: 'example' }
+        meta: { title: '体育部主页', icon: '#icon-tiyu-lanqiu' }
       }
     ]
   },
@@ -113,20 +113,35 @@ export const constantRouterMap = [
     component: Layout,
     // redirect: '/example/homepage',
     name: 'activitylist',
-    meta: { title: '活动列表', icon: 'example' },
+    meta: { title: '活动列表', icon: '#icon-huodongliebiao' },
     children: [
       {
         path: 'activity',
         name: 'activity',
         component: () => import('@/views/activity/activitylist'),
-        meta: { title: '活动列表', icon: 'example' }
+        meta: { title: '活动列表', icon: '#icon-huodongliebiao' }
       },
       {
         path: 'activitydetail',
         name: 'activitydetail',
         hidden: true,
         component: () => import('@/views/activity/activityDetail'),
-        meta: { title: '活动详情', icon: 'example' }
+        meta: { title: '活动详情', icon: '#icon-huodongliebiao' }
+      }
+    ]
+  },
+  {
+    path: '',
+    component: Layout,
+    // redirect: '/example/homepage',
+    name: 'uploader',
+    meta: { title: '上传头像', icon: '#icon-tiyu-lanqiu' },
+    children: [
+      {
+        path: 'uploader',
+        name: 'uploader',
+        component: () => import('@/views/uploader/index'),
+        meta: { title: '上传头像', icon: '#icon-tiyu-lanqiu' }
       }
     ]
   },

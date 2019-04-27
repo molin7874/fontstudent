@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name:{{ $route.query.id===1 ? '管理员' : '普通会员' }}</div>
+    <div class="dashboard-text">name:{{ member === 1 ? '管理员' : '普通会员' }}</div>
     <div class="card-container">
     <div class="top-card">
       <el-card :body-style="{ padding: '0px' }">
@@ -89,7 +89,8 @@ export default {
       divison: null,
       people: null,
       activity: null,
-      grade: null
+      grade: null,
+      member: parseInt(window.localStorage.getItem('membertype'))
     }
   },
   mounted () {
@@ -98,6 +99,7 @@ export default {
     // // 通过点语法获取img的height属性值
     //   this.imgHeight = `${this.$refs.imgHeight['0'].height}px`
     // }
+    console.log(this.member)
     this.getinitdata()
     this.getinitdata1()
     this.getinitdata2()

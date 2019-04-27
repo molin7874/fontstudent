@@ -92,11 +92,13 @@ export default {
   methods: {
     handleEdit (index, id) {
       console.log(index, id)
-      const paramUrl = '?id=' + id + '&isadmin=' + this.$store.state.user.userlevel
+      const paramUrl = '?id=' + id + '&isadmin=' + parseInt(window.localStorage.getItem('membertype'))
       this.$axios.get(this.root + '/users/viewbyid' + paramUrl, {}).then((res) => {
         console.log(res)
         if (res.data === undefined) {
           this.$message(res.msg)
+        } else if (res.data.code === '-5') {
+          this.$message('无权编辑数据')
         } else {
           this.dialogFormVisible = true
           this.form = res.data[0]
@@ -107,7 +109,7 @@ export default {
       console.log(index, id)
       let paramUrl = this.$qs.stringify({
         id: id,
-        isadmin: this.$store.state.user.userlevel
+        isadmin: parseInt(window.localStorage.getItem('membertype'))
       })
       this.$axios.post(this.root + '/users/delstudy', paramUrl).then((res) => {
         if (res.code === '0') {
@@ -119,7 +121,7 @@ export default {
     },
     confirmdata () {
       let paramUrl = this.$qs.stringify({
-        isadmin: this.$store.state.user.userlevel,
+        isadmin: parseInt(window.localStorage.getItem('membertype')),
         id: this.form.id,
         division: this.form.division,
         uername: this.form.username

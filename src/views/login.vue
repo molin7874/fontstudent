@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="formLabelAlign"  class="login-form" auto-complete="on" label-position="left">
+    <el-form ref="loginForm" :model="formLabelAlign"  :rules="rules"  class="login-form" auto-complete="on" label-position="left">
       <h3 class="title">学生会事务管理系统</h3>
       <el-form-item prop="username">
         <!-- <span class="svg-container">
@@ -54,7 +54,17 @@ export default {
         username: '',
         password: ''
       },
-      pwdType: 'password'
+      pwdType: 'password',
+      rules: {
+        username: [
+          {required: true, message: '请输入正确的用户名', trigger: 'blur'},
+          { min: 5, max: 6, message: '长度在 5 到 6 个字符', trigger: 'blur' }
+        ],
+        password: [
+          {required: true, message: '请输入正确格式的密码', trigger: 'blur'},
+          { min: 6, max: 7, message: '长度在 6 到 7 个字符', trigger: 'blur' }
+        ]
+      }
     }
   },
   mounted () {
@@ -88,6 +98,7 @@ export default {
     },
     initstore (userlevel) {
       this.$store.state.user.userlevel = userlevel
+      window.localStorage.setItem('membertype', userlevel)
     },
     toregiste () {
       this.$router.push({path: '/registe'})

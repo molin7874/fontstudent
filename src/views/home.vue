@@ -1,22 +1,6 @@
 <template>
  <div class="reg-contanier">
-   <el-upload
-      :class="{ 'upload-demo': blocktrue, 'upload': nonefalse}"
-      action="/api/upload"
-      :auto-upload="false"
-      :limit="1"
-      ref="upload"
-      :http-request="upload"
-      multiple
-      list-type="picture"
-      :on-success="handleAvatarSuccess"
-      accept="image/png, image/jpeg">
-      <!-- :http-request="upload" -->
-      <el-button size="small" type="primary">点击上传</el-button>
-      <div slot="tip" class="el-upload__tip">只能上传jpg,png图片</div>
-    </el-upload>
-    <el-button type="primary" @click="upload" class="confirm-btn">确定</el-button>
-    <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign" class="reg-form">
+<el-form :label-position="labelPosition"  :model="formLabelAlign" class="reg-form">
   <el-form-item>
     <el-input v-model="formLabelAlign.username" name="username" placeholder="username"></el-input>
   </el-form-item>
@@ -97,7 +81,7 @@ export default {
       // formData.append('age', this.age)
       this.$axios.post(this.root + '/upload', formData, headerConfig).then(res => {
         console.log(res)
-        this.nonefalse = true
+        // this.nonefalse = true
         localStorage.setItem('userimg', res.data.name)
       })
     }
@@ -108,11 +92,16 @@ export default {
 .reg-contanier{
   height: 100%;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
   .reg-form{
     width: 520px;
     max-width: 100%;
-    padding: 35px 35px 15px 35px;
-    margin: 120px auto;
+    // padding: 35px 35px 15px 35px;
+    // margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
   }
   .el-button{
     width: 100%

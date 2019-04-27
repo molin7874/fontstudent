@@ -4,10 +4,11 @@
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <!-- <svg v-if="onlyOneChild.meta" class="icon image" aria-hidden="true">
-            <use xlink:href="#icon-jianguanzhifa-dianzianjuan"></use>
-          </svg> -->
-          <item v-if="onlyOneChild.meta" :icon="onlyOneChild.meta.icon||item.meta.icon" :title="onlyOneChild.meta.title" />
+          <svg v-if="onlyOneChild.meta" class="icon image" aria-hidden="true">
+            <use :xlink:href= onlyOneChild.meta.icon></use>
+          </svg>
+          <!-- <item v-if="onlyOneChild.meta" :icon="onlyOneChild.meta.icon||item.meta.icon" :title="onlyOneChild.meta.title" /> -->
+          <span>{{onlyOneChild.meta.title}}</span>
         </el-menu-item>
       </app-link>
     </template>
@@ -27,7 +28,11 @@
           class="nest-menu" />
         <app-link v-else :to="resolvePath(child.path)" :key="child.name">
           <el-menu-item :index="resolvePath(child.path)">
-            <item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" />
+            <svg v-if="child.meta" class="icon image" aria-hidden="true">
+            <use :xlink:href= child.meta.icon></use>
+          </svg>
+            <!-- <item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" /> -->
+            <span>{{child.meta.title}}</span>
           </el-menu-item>
         </app-link>
       </template>
