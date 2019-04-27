@@ -52,7 +52,7 @@
           @click="handleDelete(scope.$index, scope.row.id)">删除</el-button>
           <el-button
           size="mini"
-          @click="export2Excel()">打印</el-button>
+          @click="export2Excel()" disabled>打印</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -131,20 +131,20 @@ export default {
         this.$message(res.data.msg)
       })
     },
-    export2Excel () {
-      require.ensure([], () => {
-        // eslint-disable-next-line
-        const { export_json_to_excel } = require('../../vendor/Export2Excel')
-        const tHeader = ['id', '年级', '姓名', '专业']
-        const filterVal = ['id', 'grade', 'username', 'major'] // 对应字段
-        const list = this.tableData
-        const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, '学习部数据excel')
-      })
-    },
-    formatJson (filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]))
-    },
+    // export2Excel () {
+    //   require.ensure([], () => {
+    //     // eslint-disable-next-line
+    //     // const { export_json_to_excel } = require('../../vendor/Export2Excel')
+    //     const tHeader = ['id', '年级', '姓名', '专业']
+    //     const filterVal = ['id', 'grade', 'username', 'major'] // 对应字段
+    //     const list = this.tableData
+    //     const data = this.formatJson(filterVal, list)
+    //     export_json_to_excel(tHeader, data, '学习部数据excel')
+    //   })
+    // },
+    // formatJson (filterVal, jsonData) {
+    //   return jsonData.map(v => filterVal.map(j => v[j]))
+    // },
     getinitdata () {
       this.$axios.get(this.root + '/users/getstudydivision', {}).then((res) => {
         this.tableData = res.data

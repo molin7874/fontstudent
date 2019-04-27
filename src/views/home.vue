@@ -1,20 +1,29 @@
 <template>
  <div class="reg-contanier">
-<el-form :label-position="labelPosition"  :model="formLabelAlign" class="reg-form">
-  <el-form-item>
+<el-form :label-position="labelPosition" ref="ruleForm" :rules="rules"  :model="formLabelAlign" class="reg-form">
+  <el-form-item  prop="username">
     <el-input v-model="formLabelAlign.username" name="username" placeholder="username"></el-input>
   </el-form-item>
-  <el-form-item>
-    <el-input v-model="formLabelAlign.grade" name="grade" placeholder="grade"></el-input>
+  <el-form-item  prop="grade">
+    <el-select v-model="formLabelAlign.grade" placeholder="请填写年级">
+      <el-option label="大一" value="大一"></el-option>
+      <el-option label="大二" value="大二"></el-option>
+      <el-option label="大三" value="大三"></el-option>
+      <el-option label="大四" value="大四"></el-option>
+    </el-select>
   </el-form-item>
-  <el-form-item >
+  <el-form-item prop="password">
     <el-input v-model="formLabelAlign.password" name="password" placeholder="password"></el-input>
   </el-form-item>
-  <el-form-item >
-    <el-input v-model="formLabelAlign.major" name="major" placeholder="major"></el-input>
+  <el-form-item prop="major">
+    <el-select v-model="formLabelAlign.major" placeholder="请填写专业">
+      <el-option label="计算机" value="计算机"></el-option>
+      <el-option label="软件" value="软件"></el-option>
+      <el-option label="会计" value="会计"></el-option>
+    </el-select>
   </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="registe()">注册</el-button>
+    <el-button type="primary" @click="registe('ruleForm')">注册</el-button>
   </el-form-item>
 </el-form>
  </div>
@@ -32,22 +41,44 @@ export default {
         grade: '',
         password: null,
         major: ''
+      },
+      rules: {
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, max: 8, message: '长度在 6 到 8 个字符', trigger: 'blur' }
+        ],
+        grade: [
+          { required: true, message: '请选择年级', trigger: 'change' }
+        ],
+        major: [
+          { required: true, message: '请选择专业', trigger: 'change' }
+        ]
       }
     }
   },
   methods: {
-    registe () {
+    registe (formName) {
       // const paramUrl = '?id=' + this.formLabelAlign.id + '&userid=' + this.formLabelAlign.userid + '&password=' + this.formLabelAlign.password + '&email=' + this.formLabelAlign.email
-      let paramUrl = this.$qs.stringify({
-        username: this.formLabelAlign.username,
-        grade: this.formLabelAlign.grade,
-        password: this.formLabelAlign.password,
-        major: this.formLabelAlign.major
-      })
-      this.$axios.post(this.root + '/adduser', paramUrl).then((res) => {
-        console.log(res.data.token)
-        setToken(res.data.token)
-        this.istoken(res.data.token)
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          let paramUrl = this.$qs.stringify({
+            username: this.formLabelAlign.username,
+            grade: this.formLabelAlign.grade,
+            password: this.formLabelAlign.password,
+            major: this.formLabelAlign.major
+          })
+          this.$axios.post(this.root + '/adduser', paramUrl).then((res) => {
+            console.log(res.data.token)
+            setToken(res.data.token)
+            this.istoken(res.data.token)
+          })
+        } else {
+          this.$message('请填写完整')
+        }
       })
     },
     istoken (logintoken) {
@@ -94,6 +125,7 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 20px;
   .reg-form{
     width: 520px;
@@ -118,5 +150,8 @@ export default {
 }
 .el-upload-list--picture{
     width: 300px;
+  }
+  .el-select{
+    width: 100%;
   }
 </style>
