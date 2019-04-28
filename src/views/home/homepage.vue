@@ -100,6 +100,14 @@ export default {
     // this.datafromrouter()
     this.chartlist()
     this.chartpie()
+  },
+  created () {
+    let usertype = parseInt(window.localStorage.getItem('membertype'))
+    if (usertype === 1) {
+      console.log('会员类型', usertype)
+    } else {
+      this.$router.push({path: '/401'})
+    }
   }
 }
 </script>

@@ -85,7 +85,12 @@ export default {
     }
   },
   created () {
-    this.getactivity()
+    let usertype = parseInt(window.localStorage.getItem('membertype'))
+    if (usertype === 1) {
+      this.getactivity()
+    } else {
+      this.$router.push({path: '/401'})
+    }
   }
 }
 </script>

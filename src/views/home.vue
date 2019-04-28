@@ -1,11 +1,12 @@
 <template>
  <div class="reg-contanier">
 <el-form :label-position="labelPosition" ref="ruleForm" :rules="rules"  :model="formLabelAlign" class="reg-form">
+  <h3>会员注册</h3>
   <el-form-item  prop="username">
-    <el-input v-model="formLabelAlign.username" name="username" placeholder="username"></el-input>
+    <el-input v-model="formLabelAlign.username" name="username" placeholder="请填写用户名"></el-input>
   </el-form-item>
   <el-form-item  prop="grade">
-    <el-select v-model="formLabelAlign.grade" placeholder="请填写年级">
+    <el-select v-model="formLabelAlign.grade" placeholder="请选择年级">
       <el-option label="大一" value="大一"></el-option>
       <el-option label="大二" value="大二"></el-option>
       <el-option label="大三" value="大三"></el-option>
@@ -13,10 +14,10 @@
     </el-select>
   </el-form-item>
   <el-form-item prop="password">
-    <el-input v-model="formLabelAlign.password" name="password" placeholder="password"></el-input>
+    <el-input v-model="formLabelAlign.password" name="password" placeholder="请填写密码"></el-input>
   </el-form-item>
   <el-form-item prop="major">
-    <el-select v-model="formLabelAlign.major" placeholder="请填写专业">
+    <el-select v-model="formLabelAlign.major" placeholder="请选择专业">
       <el-option label="计算机" value="计算机"></el-option>
       <el-option label="软件" value="软件"></el-option>
       <el-option label="会计" value="会计"></el-option>
@@ -29,7 +30,7 @@
  </div>
 </template>
 <script>
-import {setToken} from '@/utils/auth'
+// import {setToken} from '@/utils/auth'
 export default {
   data () {
     return {
@@ -72,9 +73,15 @@ export default {
             major: this.formLabelAlign.major
           })
           this.$axios.post(this.root + '/adduser', paramUrl).then((res) => {
-            console.log(res.data.token)
-            setToken(res.data.token)
-            this.istoken(res.data.token)
+            // console.log(res.data.token)
+            // setToken(res.data.token)
+            // // this.istoken(res.data.token)
+            if (res.data.code === '-4') {
+              this.$message('参数有误')
+            } else if (res.data.code === '0') {
+              this.$message('注册成功, 请登录')
+              this.$router.push({path: '/login'})
+            }
           })
         } else {
           this.$message('请填写完整')
@@ -127,6 +134,7 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 20px;
+  background-color: #f3f3f3;
   .reg-form{
     width: 520px;
     max-width: 100%;
@@ -134,6 +142,8 @@ export default {
     // margin: 0 auto;
     padding: 20px;
     border: 1px solid #ddd;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
   }
   .el-button{
     width: 100%

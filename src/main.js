@@ -17,7 +17,7 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.prototype.$axios = axios
 Vue.prototype.$qs = qs
-Vue.prototype.root = process.env.API_ROOT
+Vue.prototype.root = process.env.API_ROOT // 'http://120.79.4.43:3000'
 /* eslint-disable no-new */
 // Vue.prototype.$axios.defaults.headers['authorization'] = 'STDTOKEN'
 Vue.prototype.$axios.interceptors.request.use(

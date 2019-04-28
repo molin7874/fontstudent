@@ -10,11 +10,11 @@
       <el-dropdown-menu slot="dropdown" class="user-dropdown">
         <router-link class="inlineBlock" to="/">
           <el-dropdown-item>
-            Home
+            首页
           </el-dropdown-item>
         </router-link>
         <el-dropdown-item divided>
-          <span style="display:block;" @click="logout">LogOut</span>
+          <span style="display:block;" @click="logout">登出</span>
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -25,7 +25,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-
+import {removeToken} from '@/utils/auth'
 export default {
   components: {
     Breadcrumb,
@@ -47,6 +47,9 @@ export default {
       this.$store.dispatch('ToggleSideBar')
     },
     logout () {
+      removeToken()
+      window.localStorage.removeItem('membertype')
+      window.localStorage.removeItem('userimg')
       this.$router.push({path: '/login'})
     },
     getuserimg () {

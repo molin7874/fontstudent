@@ -23,6 +23,7 @@ export const constantRouterMap = [
   { path: '/login', component: () => import('@/views/login') },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
   { path: '/registe', component: () => import('@/views/home'), hidden: true },
+  // { path: '/401', component: () => import('@/views/401'), hidden: true },
   {
     path: '/',
     component: Layout,
@@ -34,7 +35,6 @@ export const constantRouterMap = [
       component: () => import('@/views/dashboard/index')
     }]
   },
-
   {
     path: '',
     component: Layout,
@@ -53,6 +53,22 @@ export const constantRouterMap = [
         name: 'addstudent',
         component: () => import('@/views/addstudent'),
         meta: { title: '添加活动', icon: '#icon-ziyouhuodong' }
+      }
+    ]
+  },
+  {
+    path: '',
+    component: Layout,
+    // redirect: '/example/homepage',
+    hidden: true,
+    name: '401',
+    meta: { title: '401', icon: '#icon-xuexishuben' },
+    children: [
+      {
+        path: '401',
+        name: '401',
+        component: () => import('@/views/401'),
+        meta: { title: '401', icon: '#icon-xuexishuben' }
       }
     ]
   },
