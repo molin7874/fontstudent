@@ -7,6 +7,8 @@
       :limit="1"
       ref="upload"
       :http-request="upload"
+      :on-remove="www2"
+      :on-change="eee2"
       multiple
       list-type="picture-card"
       :on-success="handleAvatarSuccess"
@@ -25,7 +27,9 @@ export default {
   data () {
     return {
       nonefalse: false,
-      blocktrue: true
+      blocktrue: true,
+      imgList2: [],
+      name: window.localStorage.getItem('memberid')
     }
   },
   methods: {
@@ -42,13 +46,36 @@ export default {
         return
       }
       formData.append('file', file.raw)
-      // formData.append('name', this.name)
+      formData.append('id', this.name)
       // formData.append('age', this.age)
       this.$axios.post(this.root + '/upload', formData, headerConfig).then(res => {
-        console.log(res)
-        // this.nonefalse = true
-        localStorage.setItem('userimg', res.data.name)
+        if (res.data.code === '0') {
+          // console.log(res)
+          // this.nonefalse = true
+          localStorage.setItem('userimg', res.data.name)
+          this.$message('上传成功,请重新登录')
+          this.$router.push({path: '/login'})
+        } else {
+          this.$message('上传失败')
+        }
       })
+    },
+    www2 (file, fileList) {
+      if (fileList.length >= 1) {
+        document.getElementsByClassName('el-upload--picture-card')[0].style.display = 'none'
+      } else {
+        document.getElementsByClassName('el-upload--picture-card')[0].style.display = 'inline-block'
+      }
+    },
+    eee2 (file, fileList) {
+      fileList = []
+      fileList.push(file)
+      this.imgList2 = fileList
+      if (fileList.length >= 1) {
+        document.getElementsByClassName('el-upload--picture-card')[0].style.display = 'none'
+      } else {
+        document.getElementsByClassName('el-upload--picture-card')[0].style.display = 'inline-block'
+      }
     }
   }
 }

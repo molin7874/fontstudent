@@ -87,6 +87,7 @@ export default {
           this.$message('成功' + res.data.msg)
           this.initstore(res.data.isadmin)
           setToken(res.data.token)
+          window.localStorage.setItem('memberid', res.data.id)
           localStorage.setItem('userimg', res.data.img)
           this.$router.push({path: '/dashboard', query: {id: res.data.isadmin}})
         } else {

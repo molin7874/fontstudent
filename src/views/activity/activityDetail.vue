@@ -30,7 +30,7 @@ export default {
       },
       bgtime: '',
       edtime: '',
-      disable: ''
+      disable: false
     }
   },
   created () {
@@ -50,12 +50,15 @@ export default {
         this.bgtime = this.stringToDate(this.form.begintime)
         this.edtime = this.stringToDate(this.form.endTime)
         let currenttime = new Date()
+        console.log(currenttime)
         if (this.bgtime < currenttime && currenttime < this.endTime) {
+          console.log('没过期', currenttime)
           this.disable = false
         } else if (currenttime < this.bgtime || currenttime > this.endTime) {
           this.disable = true
           this.$message('活动过期')
         }
+        console.log('currenttime比较大小', currenttime < this.bgtime)
       })
     },
     stringToDate (dateStr, separator) {
