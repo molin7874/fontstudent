@@ -45,21 +45,20 @@ export default {
     },
     getstuDetail () {
       const param = '?id=' + this.routedata.id
-      this.$axios.get(this.root + '/users/viewactivitybyid' + param, {}).then((res) => {
-        this.form = res.data[0]
-        this.bgtime = this.stringToDate(this.form.begintime)
-        this.edtime = this.stringToDate(this.form.endTime)
-        let currenttime = new Date()
-        console.log(currenttime)
-        if (this.bgtime < currenttime && currenttime < this.endTime) {
-          console.log('没过期', currenttime)
-          this.disable = false
-        } else if (currenttime < this.bgtime || currenttime > this.endTime) {
-          this.disable = true
-          this.$message('活动过期')
-        }
-        console.log('currenttime比较大小', currenttime < this.bgtime)
-      })
+      this.$axios
+        .get(this.root + '/users/viewactivitybyid' + param, {})
+        .then(res => {
+          this.form = res.data[0]
+          let bgtime = this.stringToDate(this.form.begintime)
+          let edtime = this.stringToDate(this.form.endTime)
+          let currenttime = new Date()
+          if (bgtime < currenttime && currenttime < edtime) {
+            this.disable = false
+          } else if (currenttime < bgtime || currenttime > edtime) {
+            this.disable = true
+            this.$message('活动过期')
+          }
+        })
     },
     stringToDate (dateStr, separator) {
       if (!separator) {
@@ -81,9 +80,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.detail-container{
+.detail-container {
   height: 100%;
-  .center-content{
+  .center-content {
     display: flex;
     flex-direction: column;
     height: 300px;
@@ -91,13 +90,13 @@ export default {
     justify-content: center;
     position: relative;
     top: 100px;
-    .el-input{
+    .el-input {
       width: 40%;
     }
-    .el-textarea{
+    .el-textarea {
       width: 40%;
     }
-    .el-button{
+    .el-button {
       width: 40%;
     }
   }

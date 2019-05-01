@@ -29,6 +29,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/dashboard',
     name: 'Dashboard',
+    meta: {requireAuth: true},
     hidden: true,
     children: [{
       path: 'dashboard',
@@ -46,13 +47,13 @@ export const constantRouterMap = [
         path: 'home',
         name: 'home',
         component: () => import('@/views/home/homepage'),
-        meta: { title: '主页', icon: '#icon-jianguanzhifa-dianzianjuan' }
+        meta: { title: '主页', icon: '#icon-jianguanzhifa-dianzianjuan', requireAuth: true }
       },
       {
         path: 'addstudent',
         name: 'addstudent',
         component: () => import('@/views/addstudent'),
-        meta: { title: '添加活动', icon: '#icon-ziyouhuodong' }
+        meta: { title: '添加活动', icon: '#icon-ziyouhuodong', requireAuth: true }
       }
     ]
   },
@@ -62,13 +63,13 @@ export const constantRouterMap = [
     // redirect: '/example/homepage',
     hidden: true,
     name: '401',
-    meta: { title: '401', icon: '#icon-xuexishuben' },
+    meta: { title: '401', icon: '#icon-xuexishuben', requireAuth: true },
     children: [
       {
         path: '401',
         name: '401',
         component: () => import('@/views/401'),
-        meta: { title: '401', icon: '#icon-xuexishuben' }
+        meta: { title: '401', icon: '#icon-xuexishuben', requireAuth: true }
       }
     ]
   },
@@ -77,13 +78,13 @@ export const constantRouterMap = [
     component: Layout,
     // redirect: '/example/homepage',
     name: 'studydivision',
-    meta: { title: '学习部', icon: '#icon-xuexishuben' },
+    meta: { title: '学习部', icon: '#icon-xuexishuben', requireAuth: true },
     children: [
       {
         path: 'index',
         name: 'index',
         component: () => import('@/views/studydivision/index'),
-        meta: { title: '学习部主页', icon: '#icon-xuexishuben' }
+        meta: { title: '学习部主页', icon: '#icon-xuexishuben', requireAuth: true }
       }
     ]
   },
@@ -92,20 +93,20 @@ export const constantRouterMap = [
     component: Layout,
     // redirect: '/example/homepage',
     name: 'organizedivision',
-    meta: { title: '组织部', icon: '#icon-zuzhi' },
+    meta: { title: '组织部', icon: '#icon-zuzhi', requireAuth: true },
     children: [
       {
         path: 'organize',
         name: 'organize',
         component: () => import('@/views/organizedivision/index'),
-        meta: { title: '组织部主页', icon: '#icon-zuzhi' }
+        meta: { title: '组织部主页', icon: '#icon-zuzhi', requireAuth: true }
       },
       {
         path: 'organizedetail',
         name: 'organizedetail',
         hidden: true,
         component: () => import('@/views/organizedivision/organizeDetail'),
-        meta: { title: '组织部成员详情', icon: '#icon-zuzhi' }
+        meta: { title: '组织部成员详情', icon: '#icon-zuzhi', requireAuth: true }
       }
     ]
   },
@@ -114,13 +115,13 @@ export const constantRouterMap = [
     component: Layout,
     // redirect: '/example/homepage',
     name: 'sportsdivision',
-    meta: { title: '体育部', icon: '#icon-tiyu-lanqiu' },
+    meta: { title: '体育部', icon: '#icon-tiyu-lanqiu', requireAuth: true },
     children: [
       {
         path: 'sports',
         name: 'sports',
         component: () => import('@/views/sportsdivision/index'),
-        meta: { title: '体育部主页', icon: '#icon-tiyu-lanqiu' }
+        meta: { title: '体育部主页', icon: '#icon-tiyu-lanqiu', requireAuth: true }
       }
     ]
   },
@@ -129,20 +130,20 @@ export const constantRouterMap = [
     component: Layout,
     // redirect: '/example/homepage',
     name: 'activitylist',
-    meta: { title: '活动列表', icon: '#icon-huodongliebiao' },
+    meta: { title: '活动列表', icon: '#icon-huodongliebiao', requireAuth: true },
     children: [
       {
         path: 'activity',
         name: 'activity',
         component: () => import('@/views/activity/activitylist'),
-        meta: { title: '活动列表', icon: '#icon-huodongliebiao' }
+        meta: { title: '活动列表', icon: '#icon-huodongliebiao', requireAuth: true }
       },
       {
         path: 'activitydetail',
         name: 'activitydetail',
         hidden: true,
         component: () => import('@/views/activity/activityDetail'),
-        meta: { title: '活动详情', icon: '#icon-huodongliebiao' }
+        meta: { title: '活动详情', icon: '#icon-huodongliebiao', requireAuth: true }
       }
     ]
   },
@@ -151,13 +152,13 @@ export const constantRouterMap = [
     component: Layout,
     // redirect: '/example/homepage',
     name: 'uploader',
-    meta: { title: '上传头像', icon: '#icon-tiyu-lanqiu' },
+    meta: { title: '上传头像', icon: '#icon-tiyu-lanqiu', requireAuth: true },
     children: [
       {
         path: 'uploader',
         name: 'uploader',
         component: () => import('@/views/uploader/index'),
-        meta: { title: '上传头像', icon: '#icon-tiyu-lanqiu' }
+        meta: { title: '上传头像', icon: '#icon-tiyu-lanqiu', requireAuth: true }
       }
     ]
   },

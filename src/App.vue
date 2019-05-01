@@ -6,17 +6,17 @@
 </template>
 
 <script>
-import {removeToken} from '@/utils/auth'
+// import {removeToken} from '@/utils/auth'
 export default {
   name: 'App',
   mounted () {
     // onunload onbeforeunload
     // 关闭浏览器 窗口也会清除localstorage
-    window.onunload = function (e) {
-      removeToken()
-      window.localStorage.removeItem('membertype')
-      window.localStorage.removeItem('userimg')
-    }
+    // window.onunload = function (e) {
+    //   removeToken()
+    //   window.localStorage.removeItem('membertype')
+    //   window.localStorage.removeItem('userimg')
+    // }
   }
 }
 </script>

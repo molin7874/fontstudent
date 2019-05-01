@@ -53,7 +53,7 @@ Vue.prototype.$axios.interceptors.response.use(
   }
 )
 router.beforeEach((to, from, next) => {
-  if (to.path === '/dashboard') {
+  if (to.matched.some(record => record.meta.requireAuth)) {
     let localtoken = getToken()
     if (!localtoken) {
       next({path: '/login'})
@@ -64,6 +64,14 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
+  // if (to.matched.some(record => record.meta.requireAuth)) {
+  //   let localtoken = getToken()
+  //   if (!localtoken) {
+  //     next({path: '/login', query: {redirect: to.fullPath}})
+  //   }
+  // } else {
+  //   next()
+  // }
 })
 new Vue({
   el: '#app',
