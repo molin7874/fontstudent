@@ -24,7 +24,7 @@
         </span>
       </el-form-item>
       <el-form-item>
-        <el-button  type="primary" style="width:100%;" @click.native.prevent="getdata1">
+        <el-button  type="primary" style="width:100%;" @click.native.prevent="getdata1('loginForm')">
           登 录
         </el-button>
       </el-form-item>
@@ -77,22 +77,29 @@ export default {
     //     console.log(res)
     //   })
     // },
-    getdata1 () {
-      let paramUrl = this.$qs.stringify({
-        username: this.formLabelAlign.username,
-        password: this.formLabelAlign.password
-      })
-      this.$axios.post(this.root + '/', paramUrl).then((res) => {
-        if (res.data.code === '0') {
-          this.$message('成功' + res.data.msg)
-          this.initstore(res.data.isadmin)
-          setToken(res.data.token)
-          localStorage.setItem('userimg', res.data.img)
-          this.$router.push({path: '/dashboard', query: {id: res.data.isadmin}})
+    getdata1 (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          let paramUrl = this.$qs.stringify({
+            username: this.formLabelAlign.username,
+            password: this.formLabelAlign.password
+          })
+          this.$axios.post(this.root + '/', paramUrl).then((res) => {
+            if (res.data.code === '0') {
+              this.$message('成功' + res.data.msg)
+              this.initstore(res.data.isadmin)
+              setToken(res.data.token)
+              localStorage.setItem('userimg', res.data.img)
+              this.$router.push({path: '/dashboard', query: {id: res.data.isadmin}})
+            } else {
+              this.$message('失败' + res.data.msg)
+              this.formLabelAlign.username = ''
+              this.formLabelAlign.password = ''
+            }
+          })
         } else {
-          this.$message('失败' + res.data.msg)
-          this.formLabelAlign.username = ''
-          this.formLabelAlign.password = ''
+          this.$message('提交错误')
+          return false
         }
       })
     },
